@@ -1,0 +1,170 @@
+<html>
+
+    <body>
+
+        <div>sin(0) = y / r</div>
+        <div>cos(0) = x / r</div>
+        <div>tan(0) = y / x</div>
+
+        <img src="https://www.w3schools.com/tags/img_arc.gif"/>
+        <a href="https://www.youtube.com/watch?v=-dGi2Ffdiuk" target="_blank">Youtube</a>
+        <ul>
+            <li>Center => arc(<b>100,75</b>,50,0*Math.PI,1.5*Math.PI)</li>
+            <li>Start angle => arc(100,75,50,<b>0</b>,1.5*Math.PI)</li>
+            <li>End angle => arc(100,75,50,0*Math.PI,<b>1.5*Math.PI</b>) </li>
+        </ul>
+        <script src="dat.gui.js"></script>
+        <canvas id="myCanvas" width="500" height="500">
+
+            <script>
+
+                // CIRCLE
+                // var c = document.getElementById("myCanvas");
+                // var ctx = c.getContext("2d");
+                // ctx.beginPath();
+                // ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+                // ctx.stroke();   
+
+
+                // SINE WAVE EXAMPLE
+                // var c = document.getElementById("myCanvas");
+                // var ctx = c.getContext("2d");
+                
+                // for(x=0; x<360; x += 20){
+                //     ctx.moveTo(x+5,180);
+                //     ctx.lineTo(x,180);
+                // }
+                // ctx.moveTo(0,180);
+                
+                // for(x=0; x<=360; x+=1){
+                //     y = 180.0 - Math.sin(x*Math.PI/180)*120;
+                //     ctx.lineTo(x,y);
+                // }
+                // ctx.stroke();
+
+
+                // SINE WAVE EXAMPLE 2
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                var y=180;
+                //draw axis
+                ctx.beginPath();
+                ctx.strokeStyle = "red";
+                ctx.moveTo(0,  y/2);
+                ctx.lineTo(y,  y/2);
+                ctx.stroke();
+                // draw sin wave
+                ctx.beginPath();
+                // ctx.moveTo(x,y);
+                console.log(x);
+                ctx.strokeStyle = "black";
+                for(var x=0; x<=180; x+=1){
+                    ctx.lineTo(x,((y/2)  + y/2  * Math.sin( ((x+-y/2)/90) * Math.PI)));
+                    ctx.stroke();
+                }
+
+                console.log(((y/2)  + y/2  * Math.sin( ((x+-y/2)/90) * Math.PI)));
+                // Circle
+                ctx.beginPath();
+                ctx.strokeStyle = "green";
+                ctx.moveTo(0, y/2);
+                // x, y, radius, start angle -> in radians, end angle -> in radians
+                ctx.arc(x/2, y/2, ((y/2)  + y/2  * Math.sin( ((x+-y/2)/90) * Math.PI)), 0, 2 * Math.PI);
+                ctx.stroke();
+                // ctx.lineTo(y,  y/2);
+            </script>            
+
+        </canvas>
+
+        <canvas id="myCanvas2">
+
+            
+            <script>
+
+
+                // https://www.youtube.com/watch?v=VNmTubIDZOY
+                var canvas = document.getElementById("myCanvas2");
+                var c = canvas.getContext("2d");
+
+                var amplitude = 100;
+                var wavelength = 0.01;
+
+
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+
+
+                var gui = new dat.GUI();
+                var wave = {
+                    y: canvas.height / 2,
+                    wavelength: 0.01,
+                    amplitude: 100,
+                    frequency: 0.01
+                };
+
+                var strokeColor = {
+                    h: 200,
+                    s: 50,
+                    l: 50
+                };
+
+                console.log(canvas.height);
+                // --- .add(object, range cap begining, range cap end)
+                var waveFolder = gui.addFolder('wave');
+                waveFolder.add(wave, 'y', 0, canvas.height);
+                waveFolder.add(wave, 'amplitude', -300, 300);
+                waveFolder.add(wave, 'wavelength', -0.01, 0.01);
+                waveFolder.add(wave, 'frequency', -0.01, 1);
+                waveFolder.open();
+
+                var strokeFolder = gui.addFolder('stroke');
+                strokeFolder.add(strokeColor, 'h', 0, 255);
+                strokeFolder.open();
+
+
+                var increment = wave.frequency;
+
+                function animate() {
+
+                    requestAnimationFrame(animate);
+
+                    c.fillStyle = 'rgba(0, 0, 0, 0.01)';
+                    // c.clearRect(0,0, canvas.width, canvas.height);
+                    c.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // --- Begin path
+                    c.beginPath();
+
+                    // --- Move canvas to center of screen
+                    c.moveTo(0, canvas.height/2)
+
+                    // --- Write for loop to loop over each pixel of width
+                    for(var i = 0; i < canvas.width; i++) {
+                        // --- Draw a line for each loop through canvas width
+                            
+                        // --- Drawn the path
+                        // c.lineTo(canvas.width, canvas.height / 2);
+                        c.lineTo(i, wave.y + Math.sin(i * wave.wavelength + increment) * wave.amplitude);
+                        
+                        // c.lineTo(i,i)
+                    }
+                    c.stroke();
+
+                    // --- Fill the path
+                    c.strokeStyle = 'hsl('+strokeColor.h+', 50%, 50%)';
+                    
+
+                    increment += wave.frequency;
+
+                }
+
+                animate();
+
+
+            </script>
+
+        </canvas>
+        
+    </body>
+
+</html>

@@ -1,0 +1,57 @@
+<html>
+
+    <body>
+
+
+        <ul>
+            <li>Working with sine and cosine</li>
+            <li>Finding points in a circle</li>
+            <li>Understanding radians</li>
+        </ul>
+
+        <a href="https://www.youtube.com/watch?v=u49lF7zAQ1A" target="_blank">Youtube</a>
+        <canvas id="myCanvas" width="500" height="500">
+    
+            <script>
+                var canvas = document.getElementById('myCanvas');
+                var ctx = canvas.getContext("2d");
+                var w = canvas.width;
+                var h = canvas.height;
+                var x = w/2;
+                var y = h/2;
+                var r = h/3;
+
+
+                ctx.fillStyle = '#FFE11A';
+                ctx.fillRect(0,0,w,h);
+
+                ctx.fillStyle = '#B5E655';
+                ctx.arc(x,y,r,0,2*Math.PI, false);
+                ctx.fill();
+                
+                // Line from begining of circle to end
+                ctx.strokeStyle = '#96ca2d';
+                ctx.lineWidth = 5;
+                ctx.beginPath();
+                
+                // ctx.moveTo(x-r,y);
+                // ctx.lineTo(x+r,y);
+
+                // ctx.moveTo(x,y-r);
+                // ctx.lineTo(x,y+r);
+
+                // Move to our center point
+                ctx.moveTo(x,y);
+                ctx.lineTo(x + Math.sin(0 - Math.PI) * r/2, y + Math.cos(0 - Math.PI) * r/2);
+
+                ctx.stroke();
+
+                
+            </script>
+
+
+        </canvas>
+
+    </body>
+
+</html>

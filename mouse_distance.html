@@ -1,0 +1,100 @@
+<html>
+
+    <body>
+
+
+        <ul>
+            <li>Calculating distance between mouse and center circle</li>
+            <li>Using Square root aSquared + bSquared = cSquared</li>
+            <li>Add the radius's </li>
+        </ul>
+
+        <img src="images/Vrq80.png"/>
+
+        <a href="https://www.youtube.com/watch?v=u49lF7zAQ1A" target="_blank">Youtube</a>
+        <canvas id="myCanvas" width="1000" height="1000">
+    
+            <script>
+                var canvas = document.getElementById('myCanvas');
+                var ctx = canvas.getContext("2d");
+                var w = canvas.width;
+                var h = canvas.height;
+                var x = w/2;
+                var y = h/2;
+                var r = h/10;
+                var mouse = {
+                    x: undefined,
+                    y: undefined,
+                    r: 10
+                }
+
+                // Background
+                ctx.fillStyle = '#FFE11A';
+                ctx.fillRect(0,0,w,h);
+
+                // Circle
+                ctx.fillStyle = '#B5E655';
+                ctx.arc(x,y,r,0,2*Math.PI, false);
+                ctx.fill();
+                ctx.closePath();
+                
+
+
+                window.addEventListener("mousemove", function(e){
+                    var canvasPos = getPosition(document.querySelector('#myCanvas'));
+
+                    ctx.clearRect(mouse.x - mouse.r, mouse.y - mouse.r, mouse.r + 10, mouse.r + 10);
+
+                    mouse.x = e.x - canvasPos.x;
+                    mouse.y = e.y - canvasPos.y;
+                    // --- Include distance from canvas to get acurate reading 
+                    calcDistance();
+                    drawMouseCirc();
+                })
+                
+
+                function getPosition(element) {
+                    var xPosition = 0;
+                    var yPosition = 0;
+
+                    while(element) {
+                        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                        element = element.offsetParent;
+                    }
+
+                    return { x: xPosition, y: yPosition };
+                }
+
+                function calcDistance() {
+                    var dx = mouse.x - x;
+                    var dy = mouse.y - y;
+
+                    var distance = Math.sqrt(dx*dx + dy*dy);
+
+                    // console.log(distance);
+
+                    if(distance < (r + mouse.r)){
+                        console.log("Overlapping")
+                    }
+                }
+
+
+                function drawMouseCirc(){
+                    ctx.fillStyle = '#000';
+                    ctx.arc(mouse.x,mouse.y,mouse.r,0,2*Math.PI, false);
+                    ctx.fill();
+                    ctx.closePath();
+                    
+                }
+
+
+                
+            </script>
+
+
+        </canvas>
+
+    </body>
+
+</html>
