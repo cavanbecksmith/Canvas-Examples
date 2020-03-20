@@ -1,0 +1,71 @@
+<html>
+
+    <body>
+
+
+        <ul>
+            <li>Working with sine and cosine</li>
+            <li>Finding points in a circle</li>
+            <li>Understanding radians</li>
+        </ul>
+
+        <a href="https://www.youtube.com/watch?v=u49lF7zAQ1A" target="_blank">Youtube</a>
+        <canvas id="canvas" width="700" height="800">
+    
+            <script>
+
+
+
+              var canvas = document.getElementById("canvas");
+              var centerX = canvas.width / 2,
+                centerY = canvas.height / 2,
+                radius = 100,
+                width = 15,
+                angles = [],
+                ctx = canvas.getContext("2d");
+
+              function draw() {
+                var angle;
+
+                var count = 360
+
+                for (var i = 0; i < count; i += 10) {
+
+                  angle = (i * Math.PI / (count / 2));
+
+                  ctx.beginPath();
+
+                  ctx.moveTo(
+                    centerX + Math.sin(angle), // * radius,
+                    centerY + Math.cos(angle) // * radius
+                  );
+
+                  ctx.lineTo(
+                    centerX + Math.sin(angle) * (radius + radius),
+                    centerY + Math.cos(angle) * (radius + radius));
+
+
+                  colorText(i, centerX + Math.sin(angle)* (radius + radius), centerY + Math.cos(angle) * (radius + radius), 'blue');
+
+                  ctx.closePath();
+                  ctx.stroke();
+                }
+
+              }
+
+              draw();
+
+              function colorText(showWords, textX, textY, fillColor) {
+                ctx.fillStyle = fillColor;
+                ctx.fillText(showWords, textX, textY)
+              }
+
+
+            </script>
+
+
+        </canvas>
+
+    </body>
+
+</html>
